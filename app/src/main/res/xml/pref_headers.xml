@@ -3,27 +3,27 @@
     <!-- These settings headers are only used on tablets. (Since when were comments in tutorials so wrong!?) -->
 
     <header
-        android:fragment="com.team980.thunderscout.preferences.SettingsActivity$GeneralPreferenceFragment"
+        android:fragment="com.team980.thunderscout.signup_form.preferences.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_settings_white_24dp"
         android:title="General"/>
 
     <header
-        android:fragment="com.team980.thunderscout.preferences.SettingsActivity$ScoutPreferenceFragment"
+        android:fragment="com.team980.thunderscout.signup_form.preferences.SettingsActivity$ScoutPreferenceFragment"
         android:icon="@drawable/ic_send_white_24dp"
         android:title="Scouting" />
 
     <header
-        android:fragment="com.team980.thunderscout.preferences.SettingsActivity$BluetoothServerPreferenceFragment"
+        android:fragment="com.team980.thunderscout.signup_form.preferences.SettingsActivity$BluetoothServerPreferenceFragment"
         android:icon="@drawable/ic_settings_bluetooth_white_24dp"
         android:title="Bluetooth Server" />
 
     <!--<header
-    android:fragment="com.team980.thunderscout.preferences.SettingsActivity$SheetsIntegrationPreferenceFragment"
+    android:fragment="com.team980.thunderscout.signup_form.preferences.SettingsActivity$SheetsIntegrationPreferenceFragment"
     android:icon="@drawable/ic_settings_bluetooth_white_24dp"
     android:title="Google Sheets integration" />
 
     <header
-    android:fragment="com.team980.thunderscout.preferences.SettingsActivity$DataViewPreferenceFragment"
+    android:fragment="com.team980.thunderscout.signup_form.preferences.SettingsActivity$DataViewPreferenceFragment"
     android:icon="@drawable/ic_settings_bluetooth_white_24dp"
     android:title="Data view" />-->
 
