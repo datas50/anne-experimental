@@ -13,7 +13,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
-import com.team980.thunderscout.R;
+import com.team980.thunderscout.signup_form.R;
 
 import java.util.List;
 
@@ -237,7 +237,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements Sha
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("server_storage_task"));
             bindPreferenceSummaryToValue(findPreference("bt_server_device"));
         }
     }

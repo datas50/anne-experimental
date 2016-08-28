@@ -31,6 +31,7 @@ public class ServerListenerThread extends Thread {
             // MY_UUID is the app's UUID string, also used by the client code
             tmp = mBluetoothAdapter.listenUsingRfcommWithServiceRecord(BluetoothInfo.SERVICE_NAME, UUID.fromString(BluetoothInfo.UUID));
         } catch (IOException e) {
+            e.printStackTrace();
         }
         mmServerSocket = tmp;
 

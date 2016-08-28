@@ -8,37 +8,28 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
+import com.team980.thunderscout.signup_form.data.StudentData;
 import com.team980.thunderscout.signup_form.data.task.DatabaseClearTask;
 import com.team980.thunderscout.signup_form.data.task.DatabaseReadTask;
 import com.team980.thunderscout.signup_form.info.DataViewAdapter;
-import com.team980.thunderscout.signup_form.match.ScoutActivity;
 import com.team980.thunderscout.signup_form.preferences.SettingsActivity;
+import com.team980.thunderscout.signup_form.recruit.ScoutActivity;
 
 import java.util.ArrayList;
 
-import static com.team980.thunderscout.signup_form.data.TeamWrapper.TeamComparator.SORT_AVERAGE_DEFENSES_BREACHED;
-import static com.team980.thunderscout.signup_form.data.TeamWrapper.TeamComparator.SORT_AVERAGE_GOALS_SCORED;
-import static com.team980.thunderscout.signup_form.data.TeamWrapper.TeamComparator.SORT_TEAM_NUMBER;
-import static com.team980.thunderscout.signup_form.data.TeamWrapper.TeamComparator.SORT_TOTAL_DEFENSES_BREACHED;
-import static com.team980.thunderscout.signup_form.data.TeamWrapper.TeamComparator.SORT_TOTAL_GOALS_SCORED;
 
-public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener,
-        PopupMenu.OnMenuItemClickListener, SearchView.OnQueryTextListener {
+public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener {
 
     private RecyclerView dataView;
     private DataViewAdapter adapter;
@@ -47,35 +38,35 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     private BroadcastReceiver refreshReceiver;
 
-    public static final String ACTION_REFRESH_VIEW_PAGER = "com.team980.thunderscout.REFRESH_VIEW_PAGER";
+    public static final String ACTION_REFRESH_VIEW_PAGER = "com.team980.thunderscout.signup_form.REFRESH_VIEW_PAGER";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(com.team980.thunderscout.R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(com.team980.thunderscout.R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("ThunderScout");
+        getSupportActionBar().setTitle("Team 980");
 
-        dataView = (RecyclerView) findViewById(com.team980.thunderscout.R.id.dataView);
+        dataView = (RecyclerView) findViewById(R.id.dataView);
 
         // use a linear layout manager
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         dataView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        adapter = new DataViewAdapter(this, new ArrayList<TeamWrapper>());
+        adapter = new DataViewAdapter(this, new ArrayList<StudentData>());
         dataView.setAdapter(adapter);
 
-        swipeContainer = (SwipeRefreshLayout) findViewById(com.team980.thunderscout.R.id.swipeContainer);
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
 
         swipeContainer.setOnRefreshListener(this);
 
-        swipeContainer.setColorSchemeResources(com.team980.thunderscout.R.color.primary);
-        swipeContainer.setProgressBackgroundColorSchemeResource(com.team980.thunderscout.R.color.cardview_dark_background);
+        swipeContainer.setColorSchemeResources(R.color.primary);
+        swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_light_background);
 
         DatabaseReadTask query = new DatabaseReadTask(adapter, this, swipeContainer);
         query.execute();
@@ -106,11 +97,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(com.team980.thunderscout.R.menu.menu_main, menu);
-
-        final MenuItem item = menu.findItem(com.team980.thunderscout.R.id.action_search);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
-        searchView.setOnQueryTextListener(this);
+        inflater.inflate(R.menu.menu_main, menu);
 
         return true;
     }
@@ -122,29 +109,16 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == com.team980.thunderscout.R.id.action_delete && adapter.getItemCount() > 0) {
+        if (id == R.id.action_delete && adapter.getItemCount() > 0) {
             new AlertDialog.Builder(this)
                     .setTitle("Are you sure?")
                     .setMessage("This will delete all scout data in your local database and the data cannot be recovered!")
-                    .setIcon(com.team980.thunderscout.R.drawable.ic_warning_white_24dp)
+                    .setIcon(R.drawable.ic_warning_white_24dp)
                     .setPositiveButton(android.R.string.yes, this)
                     .setNegativeButton(android.R.string.no, null).show();
         }
 
-        if (id == com.team980.thunderscout.R.id.action_sort) {
-            PopupMenu popup = new PopupMenu(this, findViewById(com.team980.thunderscout.R.id.action_sort));
-            popup.setOnMenuItemClickListener(this);
-
-            MenuInflater inflater = popup.getMenuInflater();
-            inflater.inflate(com.team980.thunderscout.R.menu.sort_modes, popup.getMenu());
-            popup.show();
-        }
-
-        if (id == com.team980.thunderscout.R.id.action_filter) {
-            Toast.makeText(this, "Coming in a future update!", Toast.LENGTH_SHORT).show();
-        }
-
-        if (id == com.team980.thunderscout.R.id.action_settings) {
+        if (id == R.id.action_settings) {
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
             startActivity(settingsIntent);
         }
@@ -155,20 +129,18 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) { //TODO this doesn't do what's advertised
         super.onSaveInstanceState(savedInstanceState);
-        adapter.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        adapter.onRestoreInstanceState(savedInstanceState);
     }
 
     /**
      * Called when the scout button is pressed.
      */
     public void onButtonPressed(View v) {
-        if (v.getId() == com.team980.thunderscout.R.id.button_scout) {
+        if (v.getId() == R.id.button_scout) {
             Intent scoutIntent = new Intent(this, ScoutActivity.class);
             startActivity(scoutIntent);
         }
@@ -190,47 +162,5 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     public void onClick(DialogInterface dialog, int whichButton) {
         DatabaseClearTask clearTask = new DatabaseClearTask(adapter, this);
         clearTask.execute();
-    }
-
-    /**
-     * Popup menu for sorting mode selection
-     */
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case com.team980.thunderscout.R.id.sort_team_number:
-                adapter.sort(SORT_TEAM_NUMBER);
-                return true;
-            case com.team980.thunderscout.R.id.sort_average_defenses_breached:
-                adapter.sort(SORT_AVERAGE_DEFENSES_BREACHED);
-                return true;
-            case com.team980.thunderscout.R.id.sort_total_defenses_breached:
-                adapter.sort(SORT_TOTAL_DEFENSES_BREACHED);
-                return true;
-            case com.team980.thunderscout.R.id.sort_average_goals_scored:
-                adapter.sort(SORT_AVERAGE_GOALS_SCORED);
-                return true;
-            case com.team980.thunderscout.R.id.sort_total_goals_scored:
-                adapter.sort(SORT_TOTAL_GOALS_SCORED);
-                return true;
-            default:
-                return false;
-        }
-    }
-
-    /**
-     * SearchView
-     */
-    @Override
-    public boolean onQueryTextChange(String query) {
-        return false;
-    }
-
-    /**
-     * SearchView
-     */
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
     }
 }

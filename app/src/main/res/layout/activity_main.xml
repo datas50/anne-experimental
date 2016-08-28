@@ -18,13 +18,13 @@
             android:background="?attr/colorPrimary"
             android:elevation="4dp"
             app:layout_scrollFlags="scroll|snap"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="3dp"
-            android:background="@color/background_floating">
+            android:background="@color/accent">
 
             <Button
                 android:id="@+id/button_scout"
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:onClick="onButtonPressed"
-                android:text="Scout a match" />
+                android:text="Sign up" />
 
         </android.support.v7.widget.Toolbar>
 

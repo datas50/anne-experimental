@@ -3,49 +3,50 @@ package com.team980.thunderscout.signup_form.info;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.team980.thunderscout.signup_form.R;
 import com.team980.thunderscout.signup_form.data.StudentData;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.List;
 
 //TODO reimplement class
 public class DataViewAdapter extends RecyclerView.Adapter<DataViewAdapter.StudentViewHolder> {
 
     private LayoutInflater mInflator;
 
+    private List<StudentData> studentData;
+
     private Context context;
 
-    public DataViewAdapter(Context context) {
+    public DataViewAdapter(Context context, List<StudentData> data) {
         super();
 
         mInflator = LayoutInflater.from(context); //TODO move to ViewGroup.getContext()
 
         this.context = context;
+
+        this.studentData = data;
     }
 
-    // onCreate ...
     @Override
     public StudentViewHolder onCreateViewHolder(ViewGroup parentViewGroup, int i) {
-        View teamView = mInflator.inflate(R.layout.team_view, parentViewGroup, false);
-        return new StudentViewHolder(teamView);
+        View studentView = mInflator.inflate(R.layout.student_view, parentViewGroup, false);
+        return new StudentViewHolder(studentView);
     }
 
-    // onBind ...
     @Override
-    public void onBindViewHolder(StudentViewHolder teamViewHolder, int position) {
+    public void onBindViewHolder(StudentViewHolder view, int position) {
+        StudentData data = studentData.get(position);
 
-    }
+        view.name.setText(data.getName());    }
 
     @Override
     public int getItemCount() {
-        return super.getItemCount();
+        return studentData.size();
     }
 
     /**
@@ -54,44 +55,8 @@ public class DataViewAdapter extends RecyclerView.Adapter<DataViewAdapter.Studen
      * @param data StudentData to insert
      */
     public void addStudentData(StudentData data) {
-        Log.d("Adding Data", "Fetching parent item list");
-
-        for (int i = 0; i < teams.size(); i++) {
-            TeamWrapper tw = teams.get(i);
-            Log.d("Adding Data", "Looping: " + i);
-
-            if (tw.getTeamNumber().equals(data.getTeamNumber())) {
-                //Pre-existing team
-                Log.d("Adding Data", "Pre existing team: " + data.getTeamNumber());
-
-                ArrayList<StudentData> childList = (ArrayList<StudentData>) tw.getChildItemList();
-
-                Log.d("Adding Data", "Fetching child item list");
-
-                for (StudentData child : childList) {
-                    Log.d("Adding Data", "Looping child: " + child.getTeamNumber());
-                    if (child.getDateAdded() == (data.getDateAdded())) { //TODO verify this works
-                        //This child has already been added to the database
-                        Log.d("Adding Data", "Child already in DB");
-                        return;
-                    }
-                }
-
-                childList.add(data);
-                Log.d("Adding Data", "Adding new child to parent");
-                notifyChildItemInserted(i, childList.size() - 1); //TODO verify this
-                notifyParentItemChanged(i); //This forces the parent to update
-
-                sort(sortMode);
-                return;
-            }
-        }
-        //New team
-        Log.d("Adding Data", "Adding new parent to list");
-        teams.add(new TeamWrapper(data.getTeamNumber(), data));
-        notifyParentItemInserted(teams.size() - 1); //TODO verify this
-
-        sort(sortMode);
+       studentData.add(data);
+       notifyItemInserted(studentData.size());
     }
 
     /**
@@ -99,42 +64,27 @@ public class DataViewAdapter extends RecyclerView.Adapter<DataViewAdapter.Studen
      * Called by the database emptier.
      */
     public void clearData() {
-        notifyParentItemRangeRemoved(0, teams.size());
-        getItemList().removeAll(teams);
+        notifyItemRangeRemoved(0, studentData.size());
+        studentData.removeAll(studentData);
     }
 
-    public class StudentViewHolder extends RecyclerView.ViewHolder {
+    public class StudentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView dateAdded;
-
-        private ImageButton infoButton;
+        private TextView name;
 
         public StudentViewHolder(View itemView) {
             super(itemView);
 
-            dateAdded = (TextView) itemView.findViewById(R.id.scout_dateAdded);
+            name = (TextView) itemView.findViewById(R.id.student_name);
 
-            infoButton = (ImageButton) itemView.findViewById(R.id.scout_infoButton);
+            itemView.setOnClickListener(this);
         }
 
-        public void bind(final StudentData studentData) {
-            dateAdded.setText(SimpleDateFormat.getDateTimeInstance().format(studentData.getDateAdded()));
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Intent launchInfoActivity = new Intent(context, InfoActivity.class);
-                    launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", studentData);
-                    context.startActivity(launchInfoActivity);
-                }
-            });
-
-            infoButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Intent launchInfoActivity = new Intent(context, InfoActivity.class);
-                    launchInfoActivity.putExtra("com.team980.thunderscout.INFO_SCOUT", studentData);
-                    context.startActivity(launchInfoActivity);
-                }
-            });
+        @Override
+        public void onClick(View view) {
+            Intent launchInfoActivity = new Intent(context, InfoActivity.class);
+            launchInfoActivity.putExtra("com.team980.thunderscout.signup_form.INFO_STUDENT", studentData.get(getAdapterPosition()));
+            context.startActivity(launchInfoActivity);
         }
     }
 

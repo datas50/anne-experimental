@@ -11,9 +11,10 @@ public final class ServerDataContract {
     /* Inner class that defines the table contents */
     public static abstract class StudentDataTable implements BaseColumns {
         public static final String TABLE_NAME = "student_data";
-        public static final String COLUMN_NAME_STUDENT_NAME = "student_name";
-        public static final String COLUMN_NAME_STUDENT_EMAIL = "student_email";
-        public static final String COLUMN_NAME_STUDENT_PHONE_NUMBER = "student_phone_number";
+        public static final String COLUMN_NAME_STUDENT_NAME = "name";
+        public static final String COLUMN_NAME_STUDENT_EMAIL = "email";
+        public static final String COLUMN_NAME_STUDENT_PHONE_NUMBER = "phone_number";
+        public static final String COLUMN_NAME_STUDENT_GRADE = "grade";
     }
 }
 

@@ -8,7 +8,7 @@
         <item name="android:navigationBarColor">?android:attr/colorPrimaryDark</item>
     </style>
 
-    <style name="ThunderScout.BaseTheme.ActionBar" parent="Theme.AppCompat.Light">
+    <style name="ThunderScout.BaseTheme.WithActionBar" parent="Theme.AppCompat.Light">
         <item name="android:windowContentTransitions" tools:targetApi="21">true</item>
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>

@@ -41,6 +41,7 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
             // MY_UUID is the app's UUID string, also used by the server code
             tmp = device.createRfcommSocketToServiceRecord(UUID.fromString(BluetoothInfo.UUID));
         } catch (IOException e) {
+            e.printStackTrace();
         }
         mmSocket = tmp;
 
@@ -63,6 +64,8 @@ public class ClientConnectionThread extends Thread { //TODO move to AsyncTask
             // Unable to connect; close the socket and get out
             notificationManager.showBtTransferError(mmSocket.getRemoteDevice().getName(),
                     notificationId);
+            connectException.printStackTrace();
+
             try {
                 mmSocket.close();
             } catch (IOException closeException) {

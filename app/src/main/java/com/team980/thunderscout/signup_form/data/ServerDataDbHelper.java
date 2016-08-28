@@ -10,7 +10,7 @@ public class ServerDataDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;
 
-    public static final String DATABASE_NAME = "ThunderScout_2016_CHAMPIONSHIPS.db";
+    public static final String DATABASE_NAME = "Team980-StudentSignup.db";
 
     private static final String TEXT_TYPE = " TEXT";
     private static final String FLOAT_TYPE = " REAL";
@@ -22,7 +22,8 @@ public class ServerDataDbHelper extends SQLiteOpenHelper {
                     StudentDataTable._ID + " INTEGER PRIMARY KEY," +
                     StudentDataTable.COLUMN_NAME_STUDENT_NAME + TEXT_TYPE + COMMA_SEP +
                     StudentDataTable.COLUMN_NAME_STUDENT_EMAIL + TEXT_TYPE + COMMA_SEP +
-                    StudentDataTable.COLUMN_NAME_STUDENT_PHONE_NUMBER + TEXT_TYPE + ")";
+                    StudentDataTable.COLUMN_NAME_STUDENT_PHONE_NUMBER + TEXT_TYPE + COMMA_SEP +
+                    StudentDataTable.COLUMN_NAME_STUDENT_GRADE + INTEGER_TYPE + ")";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + StudentDataTable.TABLE_NAME;

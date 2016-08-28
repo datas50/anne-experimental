@@ -7,7 +7,8 @@ import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.team980.thunderscout.R;
+import com.team980.thunderscout.signup_form.R;
+
 
 public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
 

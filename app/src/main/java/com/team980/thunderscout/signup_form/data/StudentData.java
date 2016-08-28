@@ -7,11 +7,19 @@ import java.io.Serializable;
  */
 public class StudentData implements Serializable { //TODO why do driverSkill, comments have teleop in the name
 
+    private String dataSource;
+
     private String name;
     private String email;
     private String phoneNumber;
+    private int grade;
 
-    public StudentData() {
+    public String getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(String dataSource) {
+        this.dataSource = dataSource;
     }
 
     public String getName() {
@@ -36,5 +44,11 @@ public class StudentData implements Serializable { //TODO why do driverSkill, co
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public int getGrade() { return grade; }
+
+    public void setGrade(int grade) {
+        this.grade = grade;
     }
 }

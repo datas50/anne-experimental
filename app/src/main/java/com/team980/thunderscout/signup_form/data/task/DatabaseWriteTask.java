@@ -49,6 +49,7 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
         values.put(ServerDataContract.StudentDataTable.COLUMN_NAME_STUDENT_NAME, data.getName());
         values.put(ServerDataContract.StudentDataTable.COLUMN_NAME_STUDENT_EMAIL, data.getEmail());
         values.put(ServerDataContract.StudentDataTable.COLUMN_NAME_STUDENT_PHONE_NUMBER, data.getPhoneNumber());
+        values.put(ServerDataContract.StudentDataTable.COLUMN_NAME_STUDENT_GRADE, data.getGrade());
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;

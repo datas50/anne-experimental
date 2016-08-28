@@ -37,7 +37,7 @@ public class DatabaseReadTask extends AsyncTask<Void, StudentData, Void> {
 
     @Override
     protected void onPreExecute() {
-        //viewAdapter.clearData();
+        viewAdapter.clearData();
 
         if (swipeLayout != null) {
 
@@ -63,7 +63,8 @@ public class DatabaseReadTask extends AsyncTask<Void, StudentData, Void> {
                 StudentDataTable._ID,
                 StudentDataTable.COLUMN_NAME_STUDENT_NAME,
                 StudentDataTable.COLUMN_NAME_STUDENT_EMAIL,
-                StudentDataTable.COLUMN_NAME_STUDENT_PHONE_NUMBER
+                StudentDataTable.COLUMN_NAME_STUDENT_PHONE_NUMBER,
+                StudentDataTable.COLUMN_NAME_STUDENT_GRADE
         };
 
         // How you want the results sorted in the resulting Cursor
@@ -116,6 +117,11 @@ public class DatabaseReadTask extends AsyncTask<Void, StudentData, Void> {
                 cursor.getColumnIndexOrThrow(StudentDataTable.COLUMN_NAME_STUDENT_PHONE_NUMBER));
 
         data.setPhoneNumber(studentPhoneNumber);
+
+        int studentGrade = cursor.getInt(
+                cursor.getColumnIndexOrThrow(StudentDataTable.COLUMN_NAME_STUDENT_GRADE));
+
+        data.setGrade(studentGrade);
 
         publishProgress(data);
     }
