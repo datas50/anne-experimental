@@ -137,7 +137,7 @@ public class ScoutActivity extends AppCompatActivity implements View.OnClickList
             studentData.setPhoneNumber(tilStudentPhoneNumber.getEditText().getText().toString());
             studentData.setGrade(Integer.valueOf(tilStudentGrade.getEditText().getText().toString()));
 
-            studentData.setDataSource(BluetoothAdapter.getDefaultAdapter().getName());
+            studentData.setDataSource(StudentData.SOURCE_LOCAL_DEVICE);
 
             DatabaseWriteTask task = new DatabaseWriteTask(studentData, this);
 

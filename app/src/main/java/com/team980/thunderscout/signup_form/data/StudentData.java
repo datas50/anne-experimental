@@ -5,14 +5,17 @@ import java.io.Serializable;
 /**
  * Implements data for one student
  */
-public class StudentData implements Serializable { //TODO why do driverSkill, comments have teleop in the name
+public class StudentData implements Serializable, Cloneable { //TODO why do driverSkill, comments have teleop in the name
 
     private String dataSource;
+    public static final String SOURCE_LOCAL_DEVICE = "This device";
 
     private String name;
     private String email;
     private String phoneNumber;
     private int grade;
+
+    //TODO add copy constructor
 
     public String getDataSource() {
         return dataSource;

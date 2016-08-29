@@ -33,6 +33,10 @@ public class InfoActivity extends AppCompatActivity {
 
         TextView dataSource = (TextView) findViewById(R.id.info_dataSource);
         dataSource.setText(data.getDataSource());
+
+        if (data.getDataSource() == StudentData.SOURCE_LOCAL_DEVICE) {
+            dataSource.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+        }
     }
 }
 

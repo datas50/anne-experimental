@@ -26,7 +26,6 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
         this.context = context;
 
         localBroadcastManager = LocalBroadcastManager.getInstance(context);
-
     }
 
     @Override
@@ -50,6 +49,7 @@ public class DatabaseWriteTask extends AsyncTask<Void, Integer, Void> {
         values.put(ServerDataContract.StudentDataTable.COLUMN_NAME_STUDENT_EMAIL, data.getEmail());
         values.put(ServerDataContract.StudentDataTable.COLUMN_NAME_STUDENT_PHONE_NUMBER, data.getPhoneNumber());
         values.put(ServerDataContract.StudentDataTable.COLUMN_NAME_STUDENT_GRADE, data.getGrade());
+        values.put(ServerDataContract.StudentDataTable.COLUMN_NAME_DATA_SOURCE, data.getDataSource());
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId;

@@ -8,7 +8,7 @@ import static com.team980.thunderscout.signup_form.data.ServerDataContract.Stude
 
 public class ServerDataDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
 
     public static final String DATABASE_NAME = "Team980-StudentSignup.db";
 
@@ -23,7 +23,8 @@ public class ServerDataDbHelper extends SQLiteOpenHelper {
                     StudentDataTable.COLUMN_NAME_STUDENT_NAME + TEXT_TYPE + COMMA_SEP +
                     StudentDataTable.COLUMN_NAME_STUDENT_EMAIL + TEXT_TYPE + COMMA_SEP +
                     StudentDataTable.COLUMN_NAME_STUDENT_PHONE_NUMBER + TEXT_TYPE + COMMA_SEP +
-                    StudentDataTable.COLUMN_NAME_STUDENT_GRADE + INTEGER_TYPE + ")";
+                    StudentDataTable.COLUMN_NAME_STUDENT_GRADE + INTEGER_TYPE + COMMA_SEP +
+                    StudentDataTable.COLUMN_NAME_DATA_SOURCE + TEXT_TYPE + ")";
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + StudentDataTable.TABLE_NAME;

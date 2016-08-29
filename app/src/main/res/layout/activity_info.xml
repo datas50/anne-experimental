@@ -16,15 +16,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email"
-            android:layout_marginRight="8dp"/>
+            android:text="Email:"
+            android:layout_marginRight="8dp"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/info_studentEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ops@team980.com"
-            android:layout_marginLeft="8dp"/>
+            android:layout_marginLeft="8dp"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -38,13 +40,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Phone Number" />
+            android:layout_marginRight="8dp"
+            android:text="Phone Number:"
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/info_studentPhoneNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="888-888-8888" />
+            android:layout_marginLeft="8dp"
+            android:text="888-888-8888"
+            android:textSize="20sp"/>
 
     </LinearLayout>
 
@@ -58,13 +64,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Grade" />
+            android:text="Grade:"
+            android:layout_marginRight="8dp"
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/info_studentGrade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="13" />
+            android:text="13"
+            android:layout_marginLeft="8dp"
+            android:textSize="20sp"/>
 
     </LinearLayout>
 
@@ -78,13 +88,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Source" />
+            android:text="Source:"
+            android:layout_marginRight="8dp"
+            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/info_dataSource"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="This device" />
+            android:text="This device"
+            android:layout_marginLeft="8dp"
+            android:textSize="18sp"/>
 
     </LinearLayout>
 

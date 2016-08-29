@@ -64,7 +64,8 @@ public class DatabaseReadTask extends AsyncTask<Void, StudentData, Void> {
                 StudentDataTable.COLUMN_NAME_STUDENT_NAME,
                 StudentDataTable.COLUMN_NAME_STUDENT_EMAIL,
                 StudentDataTable.COLUMN_NAME_STUDENT_PHONE_NUMBER,
-                StudentDataTable.COLUMN_NAME_STUDENT_GRADE
+                StudentDataTable.COLUMN_NAME_STUDENT_GRADE,
+                StudentDataTable.COLUMN_NAME_DATA_SOURCE
         };
 
         // How you want the results sorted in the resulting Cursor
@@ -122,6 +123,11 @@ public class DatabaseReadTask extends AsyncTask<Void, StudentData, Void> {
                 cursor.getColumnIndexOrThrow(StudentDataTable.COLUMN_NAME_STUDENT_GRADE));
 
         data.setGrade(studentGrade);
+
+        String dataSource = cursor.getString(
+                cursor.getColumnIndexOrThrow(StudentDataTable.COLUMN_NAME_DATA_SOURCE));
+
+        data.setDataSource(dataSource);
 
         publishProgress(data);
     }
