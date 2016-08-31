@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,8 +26,6 @@ public class ScoutActivity extends AppCompatActivity implements View.OnClickList
 
     private StudentData studentData;
 
-    private FloatingActionButton fab;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +44,6 @@ public class ScoutActivity extends AppCompatActivity implements View.OnClickList
         getSupportActionBar().setTitle("Sign up");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear_white_24dp);
-
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(this);
     }
 
     @Override
@@ -92,7 +86,7 @@ public class ScoutActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.fab) {
+        if (v.getId() == R.id.submitButton) {
 
             TextInputLayout tilStudentName = (TextInputLayout) findViewById(R.id.signup_tilStudentName);
             TextInputLayout tilStudentEmail = (TextInputLayout) findViewById(R.id.signup_tilStudentEmail);
@@ -105,20 +99,6 @@ public class ScoutActivity extends AppCompatActivity implements View.OnClickList
             }
 
             tilStudentName.setErrorEnabled(false);
-
-            if (tilStudentEmail.getEditText().getText().toString().isEmpty()) {
-                tilStudentEmail.setError("This field is required");
-                return;
-            }
-
-            tilStudentEmail.setErrorEnabled(false);
-
-            if (tilStudentPhoneNumber.getEditText().getText().toString().isEmpty()) {
-                tilStudentPhoneNumber.setError("This field is required");
-                return;
-            }
-
-            tilStudentPhoneNumber.setErrorEnabled(false);
 
             if (tilStudentGrade.getEditText().getText().toString().isEmpty()) {
                 tilStudentGrade.setError("This field is required");
@@ -139,7 +119,7 @@ public class ScoutActivity extends AppCompatActivity implements View.OnClickList
 
             studentData.setDataSource(StudentData.SOURCE_LOCAL_DEVICE);
 
-            DatabaseWriteTask task = new DatabaseWriteTask(studentData, this);
+            DatabaseWriteTask task = new DatabaseWriteTask(new StudentData(studentData), this);
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -154,7 +134,7 @@ public class ScoutActivity extends AppCompatActivity implements View.OnClickList
                     studentData.setDataSource(BluetoothAdapter.getDefaultAdapter().getName());
 
                     Log.d("TS-BT", device.getName());
-                    ClientConnectionThread connectThread = new ClientConnectionThread(device, new StudentData(studentData), this); //Copy constructor ;)
+                    ClientConnectionThread connectThread = new ClientConnectionThread(device, studentData, this); //Copy constructor ;)
                     connectThread.start();
 
                     task.execute();
