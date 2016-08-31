@@ -154,7 +154,7 @@ public class ScoutActivity extends AppCompatActivity implements View.OnClickList
                     studentData.setDataSource(BluetoothAdapter.getDefaultAdapter().getName());
 
                     Log.d("TS-BT", device.getName());
-                    ClientConnectionThread connectThread = new ClientConnectionThread(device, studentData, this);
+                    ClientConnectionThread connectThread = new ClientConnectionThread(device, new StudentData(studentData), this); //Copy constructor ;)
                     connectThread.start();
 
                     task.execute();

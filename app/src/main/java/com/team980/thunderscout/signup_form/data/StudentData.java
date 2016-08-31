@@ -15,7 +15,21 @@ public class StudentData implements Serializable, Cloneable { //TODO why do driv
     private String phoneNumber;
     private int grade;
 
-    //TODO add copy constructor
+    public StudentData() {
+
+    }
+
+    /**
+     * Copy constructor
+     */
+    public StudentData(StudentData other) {
+        setDataSource(other.getDataSource());
+
+        setName(other.getName());
+        setEmail(other.getEmail());
+        setPhoneNumber(other.getPhoneNumber());
+        setGrade(other.getGrade());
+    }
 
     public String getDataSource() {
         return dataSource;
@@ -49,7 +63,9 @@ public class StudentData implements Serializable, Cloneable { //TODO why do driv
         this.phoneNumber = phoneNumber;
     }
 
-    public int getGrade() { return grade; }
+    public int getGrade() {
+        return grade;
+    }
 
     public void setGrade(int grade) {
         this.grade = grade;
