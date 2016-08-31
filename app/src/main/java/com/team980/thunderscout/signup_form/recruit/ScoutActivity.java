@@ -73,6 +73,7 @@ public class ScoutActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this) //TODO specify newer icon
+                .setIcon(R.drawable.ic_warning_white_24dp)
                 .setTitle("Are you sure you want to exit?")
                 .setMessage("The data currently in the scouting form will be lost!")
                 .setNegativeButton(android.R.string.no, null)
