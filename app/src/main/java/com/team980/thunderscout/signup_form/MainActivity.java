@@ -1,10 +1,13 @@
 package com.team980.thunderscout.signup_form;
 
+import android.accounts.AccountManager;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
@@ -19,14 +22,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.util.ExponentialBackOff;
+import com.google.api.services.sheets.v4.SheetsScopes;
 import com.team980.thunderscout.signup_form.data.StudentData;
 import com.team980.thunderscout.signup_form.data.task.DatabaseClearTask;
 import com.team980.thunderscout.signup_form.data.task.DatabaseReadTask;
 import com.team980.thunderscout.signup_form.info.DataViewAdapter;
 import com.team980.thunderscout.signup_form.preferences.SettingsActivity;
 import com.team980.thunderscout.signup_form.recruit.ScoutActivity;
+import com.team980.thunderscout.signup_form.sheets.SheetsSendTask;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, DialogInterface.OnClickListener {
@@ -37,6 +46,10 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private SwipeRefreshLayout swipeContainer;
 
     private BroadcastReceiver refreshReceiver;
+
+    private GoogleAccountCredential credential;
+    private static final String[] SCOPES = {SheetsScopes.SPREADSHEETS, SheetsScopes.DRIVE};
+
 
     public static final String ACTION_REFRESH_VIEW_PAGER = "com.team980.thunderscout.signup_form.REFRESH_VIEW_PAGER";
 
@@ -78,6 +91,10 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 query.execute();
             }
         };
+
+        credential = GoogleAccountCredential.usingOAuth2(
+                getApplicationContext(), Arrays.asList(SCOPES))
+                .setBackOff(new ExponentialBackOff());
     }
 
     @Override
@@ -118,6 +135,20 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                     .setNegativeButton(android.R.string.no, null).show();
         }
 
+        if (id == R.id.action_sheets) {
+            String accountName = getPreferences(Context.MODE_PRIVATE)
+                    .getString("google_account_name", null);
+            if (accountName != null) {
+                credential.setSelectedAccountName(accountName);
+                startSheetsExport();
+            } else {
+                // Start a dialog from which the user can choose an account
+                startActivityForResult(
+                        credential.newChooseAccountIntent(),
+                        1000);
+            }
+        }
+
         if (id == R.id.action_settings) {
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
             startActivity(settingsIntent);
@@ -134,6 +165,45 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onActivityResult(
+            int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 1000: //REQUEST_ACCOUNT_PICKER
+                if (resultCode == RESULT_OK && data != null &&
+                        data.getExtras() != null) {
+                    String accountName =
+                            data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+                    if (accountName != null) {
+                        SharedPreferences settings =
+                                getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putString("google_account_name", accountName);
+                        editor.apply();
+                        credential.setSelectedAccountName(accountName);
+                        startSheetsExport();
+                    }
+                }
+                break;
+            case 1001: //REQUEST_AUTH
+                if (resultCode == RESULT_OK) {
+                    startSheetsExport();
+                }
+                break;
+        }
+    }
+
+    public void startSheetsExport() {
+        ProgressDialog mProgress = new ProgressDialog(this);
+        mProgress.setMessage("Exporting data to Google Sheets...");
+
+        List<StudentData> data = adapter.getDataList();
+
+        SheetsSendTask sendTask = new SheetsSendTask(credential, this, mProgress);
+        sendTask.execute(data);
     }
 
     /**

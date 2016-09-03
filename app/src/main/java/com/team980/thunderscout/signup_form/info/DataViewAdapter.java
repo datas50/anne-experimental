@@ -13,7 +13,6 @@ import com.team980.thunderscout.signup_form.data.StudentData;
 
 import java.util.List;
 
-//TODO reimplement class
 public class DataViewAdapter extends RecyclerView.Adapter<DataViewAdapter.StudentViewHolder> {
 
     private LayoutInflater mInflator;
@@ -66,6 +65,10 @@ public class DataViewAdapter extends RecyclerView.Adapter<DataViewAdapter.Studen
     public void clearData() {
         notifyItemRangeRemoved(0, studentData.size());
         studentData.removeAll(studentData);
+    }
+
+    public List<StudentData> getDataList() {
+        return studentData;
     }
 
     public class StudentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
