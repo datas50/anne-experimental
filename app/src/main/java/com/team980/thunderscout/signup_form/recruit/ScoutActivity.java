@@ -1,7 +1,5 @@
 package com.team980.thunderscout.signup_form.recruit;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,7 +8,6 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,7 +15,6 @@ import android.view.View;
 
 import com.team980.thunderscout.signup_form.R;
 import com.team980.thunderscout.signup_form.ThunderScout;
-import com.team980.thunderscout.signup_form.bluetooth.ClientConnectionThread;
 import com.team980.thunderscout.signup_form.data.StudentData;
 import com.team980.thunderscout.signup_form.data.task.DatabaseWriteTask;
 
@@ -125,11 +121,12 @@ public class ScoutActivity extends AppCompatActivity implements View.OnClickList
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
             String address = prefs.getString("bt_server_device", null);
-            if (address == null) {
-                return; //TODO notify
-            }
+            //if (address == null) {
+                //return; //TODO notify
+            //}
 
-            Log.d("TS-BT", "START1");
+            //TODO Disable BT system for now - reenable
+            /*Log.d("TS-BT", "START1");
             for (BluetoothDevice device : BluetoothAdapter.getDefaultAdapter().getBondedDevices()) {
                 if (device.getAddress().equals(address)) {
                     studentData.setDataSource(BluetoothAdapter.getDefaultAdapter().getName());
@@ -142,7 +139,7 @@ public class ScoutActivity extends AppCompatActivity implements View.OnClickList
 
                     finish();
                 }
-            }
+            }*/
         }
     }
 
