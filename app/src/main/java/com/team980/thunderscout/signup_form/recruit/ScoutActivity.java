@@ -117,6 +117,9 @@ public class ScoutActivity extends AppCompatActivity implements View.OnClickList
             studentData.setDataSource(StudentData.SOURCE_LOCAL_DEVICE);
 
             DatabaseWriteTask task = new DatabaseWriteTask(new StudentData(studentData), this);
+            task.execute();
+
+            finish();
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
