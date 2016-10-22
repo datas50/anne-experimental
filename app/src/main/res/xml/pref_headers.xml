@@ -2,10 +2,10 @@
 
     <!-- These settings headers are only used on tablets. (Since when were comments in tutorials so wrong!?) -->
 
-    <header
+    <!--<header
         android:fragment="com.team980.thunderscout.signup_form.preferences.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_settings_white_24dp"
-        android:title="General"/>
+        android:title="General"/>-->
 
     <header
         android:fragment="com.team980.thunderscout.signup_form.preferences.SettingsActivity$ScoutPreferenceFragment"

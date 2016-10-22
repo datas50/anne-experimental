@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("Team 980");
+        getSupportActionBar().setTitle("Team 980 Signup");
 
         dataView = (RecyclerView) findViewById(R.id.dataView);
 
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         swipeContainer.setOnRefreshListener(this);
 
         swipeContainer.setColorSchemeResources(R.color.primary);
-        swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_light_background);
+        swipeContainer.setProgressBackgroundColorSchemeResource(R.color.cardview_dark_background);
 
         DatabaseReadTask query = new DatabaseReadTask(adapter, this, swipeContainer);
         query.execute();

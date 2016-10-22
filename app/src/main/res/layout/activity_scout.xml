@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="bottom"
-        android:background="@color/accent">
+        android:background="@color/background_floating">
 
         <Button
             android:layout_width="wrap_content"

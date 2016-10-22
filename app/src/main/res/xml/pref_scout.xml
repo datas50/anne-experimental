@@ -1,11 +1,43 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.team980.thunderscout.signup_form.preferences.BluetoothDevicePreference
-        android:defaultValue="Master Scout"
-        android:dialogTitle="Select your server device"
-        android:key="bt_server_device"
-        android:summary="Server device (must be paired first!)"
-        android:title="Server Device" />
+    <PreferenceCategory
+        android:title="Output options"
+        android:dependency="enable_match_scout">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="ms_send_to_local_storage"
+            android:title="Save to this device" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="ms_send_to_bt_server"
+            android:title="Send to Bluetooth server" />
+
+        <!--<CheckBoxPreference
+            android:defaultValue="false"
+            android:key="ms_send_to_linked_sheet"
+            android:title="Send to linked spreadsheet" />-->
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Bluetooth">
+
+        <!--<ListPreference
+            android:defaultValue="saveLocally"
+            android:key="server_storage_task"
+            android:entries="@array/server_storage_task"
+            android:entryValues="@array/server_storage_task_values"
+            android:summary="Method of storage for data received via bluetooth server"
+            android:title="Server Storage Task" />-->
+
+        <com.team980.thunderscout.signup_form.preferences.BluetoothDevicePreference
+            android:dialogTitle="Bluetooth Server Device"
+            android:key="ms_bt_server_device"
+            android:dependency="ms_send_to_bt_server"
+            android:title="Bluetooth server device" />
+
+    </PreferenceCategory>
 
     <!-- These are examples from the tutorial -->
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->

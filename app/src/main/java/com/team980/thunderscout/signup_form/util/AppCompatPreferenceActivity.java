@@ -1,4 +1,4 @@
-package com.team980.thunderscout.signup_form.preferences;
+package com.team980.thunderscout.signup_form.util;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

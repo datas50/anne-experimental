@@ -1,5 +1,7 @@
 package com.team980.thunderscout.signup_form.recruit;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,6 +18,7 @@ import android.view.View;
 
 import com.team980.thunderscout.signup_form.R;
 import com.team980.thunderscout.signup_form.ThunderScout;
+import com.team980.thunderscout.signup_form.bluetooth.ClientConnectionThread;
 import com.team980.thunderscout.signup_form.data.StudentData;
 import com.team980.thunderscout.signup_form.data.task.DatabaseWriteTask;
 
@@ -97,6 +101,7 @@ public class ScoutActivity extends AppCompatActivity implements View.OnClickList
 
             tilStudentName.setErrorEnabled(false);
 
+
             if (tilStudentGrade.getEditText().getText().toString().isEmpty()) {
                 tilStudentGrade.setError("This field is required");
                 return;
@@ -114,36 +119,33 @@ public class ScoutActivity extends AppCompatActivity implements View.OnClickList
             studentData.setPhoneNumber(tilStudentPhoneNumber.getEditText().getText().toString());
             studentData.setGrade(Integer.valueOf(tilStudentGrade.getEditText().getText().toString()));
 
-            studentData.setDataSource(StudentData.SOURCE_LOCAL_DEVICE);
-
-            DatabaseWriteTask task = new DatabaseWriteTask(new StudentData(studentData), this);
-            task.execute();
-
-            finish();
-
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-            String address = prefs.getString("bt_server_device", null);
-            //if (address == null) {
-                //return; //TODO notify
-            //}
+            if (prefs.getBoolean("ms_send_to_local_storage", true)) {
 
-            //TODO Disable BT system for now - reenable
-            /*Log.d("TS-BT", "START1");
-            for (BluetoothDevice device : BluetoothAdapter.getDefaultAdapter().getBondedDevices()) {
-                if (device.getAddress().equals(address)) {
-                    studentData.setDataSource(BluetoothAdapter.getDefaultAdapter().getName());
+                studentData.setDataSource(StudentData.SOURCE_LOCAL_DEVICE);
 
-                    Log.d("TS-BT", device.getName());
-                    ClientConnectionThread connectThread = new ClientConnectionThread(device, studentData, this); //Copy constructor ;)
-                    connectThread.start();
+                DatabaseWriteTask task = new DatabaseWriteTask(new StudentData(studentData), this); //Copy constructor ;)
+                task.execute();
+            }
 
-                    task.execute();
+            if (prefs.getBoolean("ms_send_to_bt_server", false)) {
 
-                    finish();
+                String address = prefs.getString("ms_bt_server_device", null);
+                if (address == null) {
+                    return; //TODO notify
                 }
-            }*/
+
+                Log.d("TS-BT", "START1");
+                BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address);
+                studentData.setDataSource(BluetoothAdapter.getDefaultAdapter().getName());
+
+                Log.d("TS-BT", device.getName());
+                ClientConnectionThread connectThread = new ClientConnectionThread(device, studentData, this);
+                connectThread.start();
+            }
+
+            finish();
         }
     }
-
 }

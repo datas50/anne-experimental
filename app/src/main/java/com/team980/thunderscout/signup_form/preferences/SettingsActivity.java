@@ -1,6 +1,7 @@
 package com.team980.thunderscout.signup_form.preferences;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
 import com.team980.thunderscout.signup_form.R;
+import com.team980.thunderscout.signup_form.bluetooth.BluetoothServerService;
+import com.team980.thunderscout.signup_form.util.AppCompatPreferenceActivity;
 
 import java.util.List;
 
@@ -35,9 +38,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements Sha
             Boolean isServer = sharedPreferences.getBoolean("enable_bluetooth_server", false);
 
             if (isServer) {
-                //findPreference("bt_server_device").setEnabled(false);
+                startService(new Intent(this, BluetoothServerService.class));
             } else {
-                //findPreference("bt_server_device").setEnabled(true);
+                stopService(new Intent(this, BluetoothServerService.class));
             }
         }
     }
@@ -237,7 +240,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements Sha
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("bt_server_device"));
+            bindPreferenceSummaryToValue(findPreference("ms_bt_server_device"));
         }
     }
 

@@ -15,14 +15,4 @@
         android:orderInCategory="5"
         android:title="Settings"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_help"
-        android:orderInCategory="6"
-        android:title="Help &amp; feedback"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_about"
-        android:orderInCategory="7"
-        android:title="About"
-        app:showAsAction="never" />
 </menu>

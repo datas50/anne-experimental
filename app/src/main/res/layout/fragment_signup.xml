@@ -31,6 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:textSize="30sp"
                     android:inputType="textPersonName"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -55,6 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:textSize="30sp"
                     android:inputType="textEmailAddress"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -79,6 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:textSize="30sp"
                     android:inputType="phone"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -103,6 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:textSize="30sp"
                     android:inputType="number"/>
 
             </android.support.design.widget.TextInputLayout>
