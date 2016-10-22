@@ -157,7 +157,7 @@ public class ScoutActivity extends AppCompatActivity implements View.OnClickList
         if (operationStates.getBoolean(OPERATION_SAVE_THIS_DEVICE)) {
             studentData.setDataSource(StudentData.SOURCE_LOCAL_DEVICE);
 
-            operationStateDialog.setMessage("Saving scout data to this device");
+            operationStateDialog.setMessage("Saving signup data to this device");
 
             DatabaseWriteTask task = new DatabaseWriteTask(new StudentData(studentData), getApplicationContext(), this); //MEMORY LEAK PREVENTION
             task.execute();
@@ -170,7 +170,7 @@ public class ScoutActivity extends AppCompatActivity implements View.OnClickList
             BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address); //TODO THIS IS A NEW, BETTER SEND METHOD. NEEDS TESTING ;)
             studentData.setDataSource(BluetoothAdapter.getDefaultAdapter().getName());
 
-            operationStateDialog.setMessage("Sending scout data to " + device.getName());
+            operationStateDialog.setMessage("Sending signup data to " + device.getName());
 
             ClientConnectionThread connectThread = new ClientConnectionThread(device, studentData, getApplicationContext(), this);
             connectThread.start();
