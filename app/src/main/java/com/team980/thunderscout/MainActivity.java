@@ -23,9 +23,11 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState); //Call the superclass implementation to ensure the activity is ready to go.
+        //Specifies that the layout for this activity is provided by the layout activity_main
         setContentView(R.layout.activity_main);
-
+        // Initialize member NavigationView  so we can manipulate it later
+        // findViewById retrieves the widgets in that UI that you need to interact with programmatically.
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
