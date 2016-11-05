@@ -30,7 +30,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         MainActivity activity = (MainActivity) getActivity();
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        toolbar.setTitle("ThunderScout");
+        toolbar.setTitle("Black Hawks");
         activity.setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
